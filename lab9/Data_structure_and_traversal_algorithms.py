@@ -1,4 +1,5 @@
-#Implement the Graph Class
+from collections import deque
+
 class Graph:
     def __init__(self):
         self.graph = {}
@@ -16,18 +17,8 @@ class Graph:
     def print_graph(self):
         for vertex in self.graph:
             print(f"{vertex}: {' '.join(map(str, self.graph[vertex]))}")
-# Test
-g = Graph()
-g.add_edge(0, 1)
-g.add_edge(0, 2)
-g.add_edge(1, 2)
-g.add_edge(2, 3)
-g.print_graph()
-
-#Implement Depth-First Search(DFS)
-class Graph:
-    # ... (previous methods remain the same)
-
+    
+    # Depth-First Search (DFS)
     def dfs(self, start_vertex):
         visited = set()
         self._dfs_recursive(start_vertex, visited)
@@ -39,15 +30,8 @@ class Graph:
         for neighbor in self.graph[vertex]:
             if neighbor not in visited:
                 self._dfs_recursive(neighbor, visited)
-# Test DFS
-print("\nDFS starting from vertex 0:")
-g.dfs(0)
-
-#Implement Breadth-First Search(BFS)
-from collections import deque
-
-class Graph:
-    # ... (previous methods remain the same)
+    
+    # Breadth-First Search (BFS)
     def bfs(self, start_vertex):
         visited = set()
         queue = deque([start_vertex])
@@ -61,14 +45,8 @@ class Graph:
                 if neighbor not in visited:
                     visited.add(neighbor)
                     queue.append(neighbor)
-# Test 
-print("\nBFS starting from vertex 0:")
-g.bfs(0)
-
-#Implement a Method to Find All Paths
-class Graph:
-    # ... (previous methods remain the same)
-
+    
+    # Find all paths between two vertices
     def find_all_paths(self, start_vertex, end_vertex, path=[]):
         path = path + [start_vertex]
         if start_vertex == end_vertex:
@@ -82,16 +60,8 @@ class Graph:
                 for new_path in new_paths:
                     paths.append(new_path)
         return paths
-# Test
-print("\nAll paths from vertex 0 to vertex 3:")
-all_paths = g.find_all_paths(0, 3)
-for path in all_paths:
-    print(' -> '.join(map(str, path)))
-
-#Implement a method to check if the graph is connected
-class Graph:
-    # ... (previous methods remain the same)
-
+    
+    # Check if the graph is connected
     def is_connected(self):
         if not self.graph:
             return True
@@ -99,9 +69,34 @@ class Graph:
         visited = set()
         self._dfs_recursive(start_vertex, visited)
         return len(visited) == len(self.graph)
-# Test if the graph is connected
-print("\nIs the graph connected?", g.is_connected())
-# Add a disconnected vertex and test again
-g.add_vertex(4)
-print("After adding a disconnected vertex:")
-print("Is the graph connected?", g.is_connected())
+
+# Testing Section
+if __name__ == "__main__":
+    g = Graph()
+    g.add_edge(0, 1)
+    g.add_edge(0, 2)
+    g.add_edge(1, 2)
+    g.add_edge(2, 3)
+
+    print("\n--- Graph Structure ---")
+    g.print_graph()
+
+    print("\n--- Depth-First Search (DFS) starting from vertex 0 ---")
+    g.dfs(0)
+
+    print("\n\n--- Breadth-First Search (BFS) starting from vertex 0 ---")
+    g.bfs(0)
+
+    print("\n\n--- All paths from vertex 0 to vertex 3 ---")
+    all_paths = g.find_all_paths(0, 3)
+    for path in all_paths:
+        print(' -> '.join(map(str, path)))
+
+    print("\n--- Is the graph connected? ---")
+    print("Connected:", g.is_connected())
+
+    # Add a disconnected vertex and test again
+    g.add_vertex(4)
+    print("\nAfter adding a disconnected vertex:")
+    print("--- Is the graph connected? ---")
+    print("Connected:", g.is_connected())
